@@ -1,5 +1,5 @@
 require 'faraday'
-require './lib/app_configurator'
+require_relative 'app_configurator'
 
 class Weather
   include BaseApp::AppConfigurator
