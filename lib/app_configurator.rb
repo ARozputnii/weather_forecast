@@ -1,19 +1,21 @@
 require 'yaml'
 
-class AppConfigurator
-  SECRETS_PATH = './config/secrets.yml'
+module BaseApp
+  module AppConfigurator
+    SECRETS_PATH = './config/secrets.yml'
 
-  def configure
-    setup_database
-  end
+    def configure
+      setup_database
+    end
 
-  def get_token
-    YAML::load(IO.read(SECRETS_PATH))['telegram_bot_token']
-  end
+    def secret(key)
+      YAML::load(IO.read(SECRETS_PATH))[key]
+    end
 
-  private
+    private
 
-  def setup_database
-    # TODO: setup DB
+    def setup_database
+      # TODO: setup DB
+    end
   end
 end

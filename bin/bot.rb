@@ -1,8 +1,12 @@
 require 'telegram/bot'
 require './lib/app_configurator'
 
+include BaseApp
+p AppConfigurator
+
+
 config = AppConfigurator.new
-token = config.get_token
+token = config.secret("telegram_bot_token")
 
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
