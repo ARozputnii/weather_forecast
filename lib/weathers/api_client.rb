@@ -1,5 +1,5 @@
-require 'faraday'
-require_relative '../app_configurator'
+require "faraday"
+require_relative "../app_configurator"
 
 module Weathers
   class ApiClient
@@ -11,8 +11,8 @@ module Weathers
     end
 
     def set_data
-      res = Faraday.get("https://api.openweathermap.org/data/2.5/weather?units=metric&lat=#{latitude}&lon=#{longitude}"+
-                          "&appid=#{secret("weather_api_key")}")
+      res = Faraday.get("https://api.openweathermap.org/data/2.5/weather?units=metric&lat=#{latitude}&lon=#{longitude}" +
+                          "&appid=#{secret('weather_api_key')}")
 
       JSON.parse(res.body)
     end

@@ -1,4 +1,4 @@
-require_relative 'api_client'
+require_relative "api_client"
 
 module Weathers
   class WeatherDecorator
@@ -9,7 +9,7 @@ module Weathers
     end
 
     def set_current_weather
-      "the weather in #{weather_data["name"]} - #{weather_data['main']['temp']} degrees Celsius"
+      "the weather in #{weather_data['name']} - #{weather_data['main']['temp']} degrees Celsius"
     end
   end
 end
