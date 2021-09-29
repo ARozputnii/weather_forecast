@@ -1,0 +1,10 @@
+production:
+  clients:
+    default:
+      database: weather_forecast
+      hosts:
+        - mongo:27017
+      options:
+        server_selection_timeout: 1
+      user: mongo_root
+      password: mongo_secret_password
