@@ -1,21 +1,19 @@
 require 'yaml'
 
-module BaseApp
-  module AppConfigurator
-    SECRETS_PATH = './config/secrets.yml'
+module AppConfigurator
+  SECRETS_PATH = './config/secrets.yml'
 
-    def configure
-      setup_database
-    end
+  def configure
+    setup_database
+  end
 
-    def secret(key)
-      YAML::load(IO.read(SECRETS_PATH))[key]
-    end
+  def secret(key)
+    YAML::load(IO.read(SECRETS_PATH))[key]
+  end
 
-    private
+  private
 
-    def setup_database
-      # TODO: setup DB
-    end
+  def setup_database
+    # TODO: setup DB
   end
 end
