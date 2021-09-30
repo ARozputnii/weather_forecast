@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.8"
 
 services:
   app:
@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - redis
+      - mongo
     volumes:
       - .:/app
       - gem_cache:/usr/local/bundle/gems
@@ -14,10 +15,17 @@ services:
     command: ruby bin/bot.rb
     stdin_open: true # docker run -i
     tty: true        # docker run -t
+  mongo:
+    image: "mongo:4.4"
+    env_file: config/secrets.yml
+    ports:
+      - "27018:27017"
+    volumes:
+      - "mongodb:/var/lib/mongodb/data"
   redis:
     image: redis:6.2
     ports:
-      - 6379
+      - "6379"
     volumes:
       - redis:/data
     healthcheck:
@@ -25,4 +33,5 @@ services:
 volumes:
   gem_cache:
   redis:
+  mongodb:
 

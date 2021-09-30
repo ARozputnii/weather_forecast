@@ -1,4 +1,5 @@
 require "yaml"
+require 'mongoid'
 
 module AppConfigurator
   SECRETS_PATH = "./config/secrets.yml"
@@ -13,6 +14,6 @@ module AppConfigurator
 
   private
   def setup_database
-    # TODO: setup DB
+    Mongoid.load!(File.join('config', 'mongoid.yml'), :production)
   end
 end
