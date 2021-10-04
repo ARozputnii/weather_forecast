@@ -31,7 +31,7 @@ RUN gem install bundler -v 2.2.15
 WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle check || bundle install
+RUN bundle check || bundle install --jobs=3 --retry=3
 
 COPY . ./
 

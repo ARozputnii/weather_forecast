@@ -18,6 +18,7 @@ GEM
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.1.9)
+    connection_pool (2.2.5)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     dry-inflector (0.2.1)
@@ -54,7 +55,9 @@ GEM
     parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
+    rack (2.2.3)
     rainbow (3.0.0)
+    redis (4.4.0)
     regexp_parser (2.1.1)
     rexml (3.2.5)
     rubocop (1.21.0)
@@ -73,6 +76,10 @@ GEM
       rubocop-ast (>= 0.4.0)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
+    sidekiq (6.2.2)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     telegram-bot-ruby (0.16.0)
       dry-inflector
       faraday
@@ -94,7 +101,11 @@ DEPENDENCIES
   mongoid (~> 7.0)
   rubocop (~> 1.21)
   rubocop-performance
+  sidekiq (~> 6.2, >= 6.2.2)
   telegram-bot-ruby (~> 0.16.0)
+
+RUBY VERSION
+   ruby 2.7.3p183
 
 BUNDLED WITH
    2.2.15
