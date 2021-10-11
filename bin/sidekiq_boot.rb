@@ -7,4 +7,4 @@ Sidekiq.configure_client do |config|
   config.redis = { namespace: 'Sidekiq', url: "redis://redis:6379" }
 end
 
-Dir["workers/*.rb"].each { |file| require file }
+Dir["/app/workers/*.rb"].each { |file| require file }
