@@ -1,4 +1,3 @@
-require "telegram/bot"
 require "./lib/app_configurator"
 require "./lib/weathers/weather_decorator"
 require './models/user'

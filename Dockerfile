@@ -1,5 +1,7 @@
 FROM ruby:2.7.3-alpine
 ENV BUNDLER_VERSION=2.2.15
+ENV GEM_HOME="/usr/local/bundle"
+ENV PATH $GEM_HOME/bin:$GEM_HOME/gems/bin:$PATH
 #RUN chmod +x entrypoints/docker-entrypoint.sh
 RUN apk update && apk add gcc libc-dev make git libffi-dev openssl-dev python3-dev libxml2-dev libxslt-dev
 RUN apk add --update --no-cache \
@@ -20,13 +22,12 @@ RUN apk add --update --no-cache \
       libgcrypt-dev \
       make \
       netcat-openbsd \
-      nodejs \
       openssl \
       pkgconfig \
       postgresql-dev \
       tzdata
 
-RUN gem install bundler -v 2.2.15
+RUN gem install bundler -v $BUNDLER_VERSION
 
 WORKDIR /app
 

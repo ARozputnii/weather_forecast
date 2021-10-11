@@ -1,4 +1,5 @@
 .idea/
 .ruby-gemset
 .ruby-version
+.byebug_history
 config/secrets.yml
