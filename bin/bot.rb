@@ -12,6 +12,7 @@ Telegram::Bot::Client.run(token) do |bot|
     case message
     when Telegram::Bot::Types::Message
       p message.text
+      SendMessageWorker.perform_async
       case message.text
       when "/start"
         bot.api.send_message(

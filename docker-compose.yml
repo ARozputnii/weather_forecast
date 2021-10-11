@@ -15,6 +15,21 @@ services:
     command: bundle exec ruby bin/bot.rb
     stdin_open: true # docker run -i
     tty: true        # docker run -t
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+      - mongo
+      - app
+    volumes:
+      - .:/app
+      - gem_cache:/usr/local/bundle/gems
+    env_file: config/secrets.yml
+    command: bundle exec sidekiq -r ./bin/sidekiq_boot.rb -C config/sidekiq.yml
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
   mongo:
     image: "mongo:4.4"
     env_file: config/secrets.yml
