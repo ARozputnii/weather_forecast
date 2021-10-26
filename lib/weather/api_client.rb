@@ -1,7 +1,7 @@
 require "faraday"
 require_relative "../app_configurator"
 
-module Weathers
+module Weather
   class ApiClient
     attr_accessor :latitude, :longitude
 
