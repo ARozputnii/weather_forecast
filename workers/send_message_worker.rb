@@ -2,6 +2,6 @@ class SendMessageWorker
   include Sidekiq::Worker
 
   def perform(*args)
-    p 'bla'
+    p "bla"
   end
 end

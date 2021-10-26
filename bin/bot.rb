@@ -1,6 +1,6 @@
 require "./lib/app_configurator"
 require "./lib/weathers/weather_decorator"
-require './models/user'
+require "./models/user"
 
 include AppConfigurator # TODO: need to get refactored
 mongo = configure # TODO: need to get refactored
@@ -25,7 +25,7 @@ Telegram::Bot::Client.run(token) do |bot|
         p user = User.find_or_create_by(chat_id: message.chat.id)
       end
     else
-      p 'type unset'
+      p "type unset"
     end
   end
 end
