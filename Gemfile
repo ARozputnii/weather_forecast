@@ -7,7 +7,8 @@ gem "connection_pool", "2.2.5"
 gem "redis", "4.4.0"
 gem "sidekiq", "6.2.2"
 gem "redis-namespace"
-
 gem "rubocop", "~> 1.21", require: false
 gem "rubocop-performance", require: false
 gem "byebug"
+gem "dotenv", "~> 2.1", ">= 2.1.1"
+gem "rspec", "~> 3.10"

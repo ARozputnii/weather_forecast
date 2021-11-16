@@ -1,13 +1,15 @@
-require_relative "message_sender"
+require_relative "buttons"
+require_relative "../weather/weather_decorator"
 
 module Bot
   class TelegramResponder
+    include Buttons
     attr_reader :bot, :message, :weather_decorator
 
-    def initialize(bot, message)
-      @bot = bot
-      @message = message
-      @weather_decorator = Weather::WeatherDecorator.new(latitude: 49.4285, longitude: 32.0621)
+    def initialize(args)
+      @bot = args[:bot]
+      @message = args[:message]
+      @weather_decorator = args[:weather_data]
       # @user = User.find_or_create_by(uid: message.from.id) # TODO: add connection
     end
 
@@ -19,13 +21,17 @@ module Bot
       when Telegram::Bot::Types::Message
         send_message("Make a choice")
       else
-        p "Something error"
+        puts "Something error"
       end
     end
 
-    private
+
     def send_message(msg)
-      MessageSender.new(bot: bot, from: message.from, text: msg).send
+      bot.api.send_message(
+        chat_id:      message.from.id,
+        text:         msg,
+        reply_markup: keyboard_markup
+      )
     end
   end
 end

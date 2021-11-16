@@ -1,26 +1,18 @@
-require "yaml"
 require "bundler/setup"
+require "dotenv"
+Dotenv.load("./.env")
 Bundler.require
 
 module AppConfigurator
-  SECRETS_PATH = "./config/secrets.yml"
-
-  def configure
-    setup_database
-    setup_sidekiq
-  end
-
-  def secret(key)
-    YAML.load(IO.read(SECRETS_PATH))[key]
-  end
-
-  private
-
   def setup_database
     Mongoid.load!(File.join("config", "mongoid.yml"), :production)
   end
 
-  def setup_sidekiq
-    require "./bin/sidekiq_boot.rb"
+  def telegram_token
+    ENV["TELEGRAM_BOT_TOKEN"]
+  end
+
+  def weather_api_key
+    ENV["WEATHER_API_KEY"]
   end
 end
