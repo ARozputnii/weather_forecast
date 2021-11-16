@@ -24,4 +24,3 @@ module AppConfigurator
     require "./bin/sidekiq_boot.rb"
   end
 end
-
