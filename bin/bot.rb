@@ -1,5 +1,3 @@
-require "telegram/bot"
-
 require_relative "../lib/app_configurator"
 require_relative "../lib/bot/telegram_responder"
 require_relative "../models/user"
