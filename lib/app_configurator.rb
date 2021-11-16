@@ -1,11 +1,13 @@
 require "yaml"
-require "mongoid"
+require "bundler/setup"
+Bundler.require
 
 module AppConfigurator
   SECRETS_PATH = "./config/secrets.yml"
 
   def configure
     setup_database
+    setup_sidekiq
   end
 
   def secret(key)
@@ -13,7 +15,13 @@ module AppConfigurator
   end
 
   private
+
   def setup_database
     Mongoid.load!(File.join("config", "mongoid.yml"), :production)
   end
+
+  def setup_sidekiq
+    require "./bin/sidekiq_boot.rb"
+  end
 end
+
