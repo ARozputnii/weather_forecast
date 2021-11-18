@@ -3,3 +3,5 @@
 .ruby-version
 .byebug_history
 config/secrets.yml
+test.json
+.env

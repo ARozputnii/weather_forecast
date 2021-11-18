@@ -1,5 +1,9 @@
 module Bot
   module Buttons
+    def keyboard_markup
+      Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: [current_weather_button, tomorrow_weather_button])
+    end
+
     def current_weather_button
       set_button.new(
         text:          "Get the current weather forecast",
@@ -16,7 +20,7 @@ module Bot
 
     private
     def set_button
-      @set_button = Telegram::Bot::Types::InlineKeyboardButton
+      Telegram::Bot::Types::InlineKeyboardButton
     end
   end
 end
