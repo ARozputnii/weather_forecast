@@ -1,14 +1,15 @@
 module Bot
   class ApiClient
-    extend AppConfigurator
-
     class << self
-      def start(token = telegram_token)
+      def start(token = AppConfigurator.telegram_token)
         Telegram::Bot::Client.run(token) do |bot|
           bot.listen do |msg|
-            weather = set_weather_data
+            # weather = set_weather_data
+            p msg
+            # user = User.find_or_create_by(chat_id: msg.id)
+            user = User.last
 
-            Bot::TelegramResponder.new(bot: bot, message: msg, weather_data: weather).respond
+            Bot::TelegramResponder.new(bot: bot, message: msg, user: user).respond
           end
         end
 
