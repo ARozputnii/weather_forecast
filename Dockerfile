@@ -28,6 +28,7 @@ RUN apk add --update --no-cache \
       tzdata
 
 RUN gem install bundler -v $BUNDLER_VERSION
+RUN gem install dotenv
 
 WORKDIR /app
 

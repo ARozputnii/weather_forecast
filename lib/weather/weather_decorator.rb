@@ -1,5 +1,3 @@
-require_relative "api_client"
-
 module Weather
   class WeatherDecorator
     attr_reader :city, :temperature

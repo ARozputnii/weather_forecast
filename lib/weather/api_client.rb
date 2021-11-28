@@ -1,6 +1,3 @@
-require "faraday"
-require_relative "../app_configurator"
-
 module Weather
   class ApiClient
     include AppConfigurator

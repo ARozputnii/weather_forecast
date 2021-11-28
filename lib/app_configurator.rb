@@ -1,7 +1,8 @@
 require "bundler/setup"
-require "dotenv"
-Dotenv.load("./.env")
 Bundler.require
+Dotenv.load("./.env")
+require_relative "bot/telegram_responder.rb"
+require_relative "../models/user.rb"
 
 module AppConfigurator
   def setup_database
