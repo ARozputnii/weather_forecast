@@ -18,6 +18,10 @@ module Bot
           selective: true
         )
       end
+
+      def response_message
+        self.class.name
+      end
     end
   end
 end

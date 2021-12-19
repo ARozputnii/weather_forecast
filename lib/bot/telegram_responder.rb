@@ -14,30 +14,30 @@ module Bot
     def respond
       case message
       when Telegram::Bot::Types::CallbackQuery
-        markup = compose_buttons(data: message.data, execute: :run_and_generate_markup)
-
-        send_message('Types::CallbackQuery', markup)
+        markup, response_msg = compose_buttons(data: message.data, execute: :run_and_generate_markup)
+        send_message(response_msg, markup)
       when Telegram::Bot::Types::Message
+        # TODO: handle user reply
         if message.reply_to_message.present?
           p "REPLY '#{message.text}' to '#{message.reply_to_message.text}'"
         end
-        markup = compose_buttons(execute: :generate_markup)
 
-        send_message('Types::Message', markup)
+        markup, response_msg = compose_buttons(execute: :generate_markup)
+        send_message(response_msg, markup)
       else
         puts "Something error"
       end
     rescue => e
-      p e # TODO: should be logger over here
+      p e # TODO: should be a logger over here
     end
 
     def compose_buttons(data: nil, execute:)
-      Bot::Buttons::ButtonsComposer.new(
-        user: user,
-        data: data
-      ).send execute
-    end
+      composer      = Bot::Buttons::ButtonsComposer.new(user: user, data: data)
+      markup        = composer.send execute
+      response_msg  = composer.response_message
 
+      [markup, response_msg]
+    end
 
     def send_message(msg, keyboard_markup)
       bot.api.send_message(

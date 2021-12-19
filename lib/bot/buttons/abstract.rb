@@ -12,6 +12,10 @@ module Bot
       def force_reply
         raise 'Not implemented yet'
       end
+
+      def response_message
+        raise 'Not implemented yet'
+      end
     end
   end
 end
