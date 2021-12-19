@@ -15,10 +15,10 @@ module Bot::Buttons
       chosen_button.execute
       @response_message = chosen_button.response_message
 
-      if structure.dig(data) == :execute
+      if structure.deep_find(data) == :execute
         return
-      elsif structure.dig(data) == :force_reply
-        chosen_button.force_reply || return
+      elsif structure.deep_find(data) == :force_reply
+        return @markup = chosen_button.force_reply
       end
 
       @markup = generate_markup
@@ -33,7 +33,7 @@ module Bot::Buttons
       @chosen_button    ||= Bot::Settings::AVAILABLE_BUTTONS[data].new
       @response_message = chosen_button.response_message
 
-      result = structure.dig(data)
+      result = structure.deep_find(data)
       @markup = if result.is_a? Array
                   collect_buttons(result)
                 elsif result.is_a? Hash
