@@ -1,5 +1,5 @@
-require_relative 'buttons/buttons_composer.rb'
-require_relative 'settings'
+require_relative "buttons/buttons_composer.rb"
+require_relative "settings"
 
 module Bot
   class TelegramResponder
@@ -41,7 +41,7 @@ module Bot
 
     def send_message(msg, keyboard_markup)
       bot.api.send_message(
-        parse_mode: 'html',
+        parse_mode:   "html",
         chat_id:      message.from.id,
         text:         msg,
         reply_markup: keyboard_markup

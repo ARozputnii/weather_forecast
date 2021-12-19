@@ -3,8 +3,8 @@ Bundler.require
 Dotenv.load("./.env")
 require_relative "bot/telegram_responder.rb"
 require_relative "../models/user.rb"
-require_relative 'basic/hash'
-require 'mongoid'
+require_relative "basic/hash"
+require "mongoid"
 
 module AppConfigurator
   class << self

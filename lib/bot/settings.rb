@@ -1,7 +1,7 @@
-require_relative 'buttons/abstract'
-require_relative 'buttons/settings'
-require_relative 'buttons/reload_location'
-require_relative 'buttons/set_time'
+require_relative "buttons/abstract"
+require_relative "buttons/settings"
+require_relative "buttons/reload_location"
+require_relative "buttons/set_time"
 
 module Bot
   module Settings
@@ -13,14 +13,14 @@ module Bot
       # },
       settings: {
         reload_location: :execute,
-        set_time: :force_reply,
+        set_time:        :force_reply,
       }
     }.freeze
 
     AVAILABLE_BUTTONS = {
-      settings: Bot::Buttons::Settings,
+      settings:        Bot::Buttons::Settings,
       reload_location: Bot::Buttons::ReloadLocation,
-      set_time: Bot::Buttons::SetTime,
+      set_time:        Bot::Buttons::SetTime,
     }.freeze
   end
 end

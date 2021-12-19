@@ -2,7 +2,7 @@ module Bot
   module Buttons
     class Settings < Abstract
       def execute
-        p 'SETTINGS'
+        p "SETTINGS"
       end
 
       def markup
@@ -12,7 +12,7 @@ module Bot
         )
       end
 
-      def force_reply;end
+      def force_reply; end
 
       def response_message
         self.class.name

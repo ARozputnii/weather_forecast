@@ -2,7 +2,7 @@ module Bot
   module Buttons
     class SetTime < Abstract
       def execute
-        p 'SET TIME'
+        p "SET TIME"
       end
 
       def markup
@@ -15,7 +15,7 @@ module Bot
       def force_reply
         Telegram::Bot::Types::ForceReply.new(
           force_reply: true,
-          selective: true
+          selective:   true
         )
       end
 

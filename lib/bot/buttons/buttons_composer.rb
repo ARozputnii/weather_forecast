@@ -1,4 +1,4 @@
-require_relative '../settings'
+require_relative "../settings"
 
 module Bot::Buttons
   class ButtonsComposer
@@ -26,7 +26,7 @@ module Bot::Buttons
 
     def generate_markup
       unless data
-        @response_message = 'choose option'
+        @response_message = "choose option"
         return @markup    = collect_buttons(structure.keys)
       end
 
@@ -35,14 +35,13 @@ module Bot::Buttons
 
       result = structure.deep_find(data)
       @markup = if result.is_a? Array
-                  collect_buttons(result)
-                elsif result.is_a? Hash
-                  collect_buttons(result.keys)
-                end
+        collect_buttons(result)
+      elsif result.is_a? Hash
+        collect_buttons(result.keys)
+      end
     end
 
     private
-
     def collect_buttons(buttons_names_array)
       buttons_array = buttons_names_array.map { |name| Bot::Settings::AVAILABLE_BUTTONS[name].new.markup }.compact
       Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: buttons_array)
