@@ -11,8 +11,7 @@ module Bot
         button: set_button.new(
           text:          "Get the current weather forecast",
           callback_data: "current_weather"
-        ),
-        callback: ''
+        )
       }
     end
 

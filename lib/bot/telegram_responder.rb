@@ -1,5 +1,4 @@
-require_relative "buttons"
-require_relative 'buttons_composer'
+require_relative 'buttons/buttons_composer.rb'
 
 module Bot
   class TelegramResponder
@@ -10,64 +9,50 @@ module Bot
       @bot = args[:bot]
       @message = args[:message]
       @user = args[:user]
-      # @user = User.find_or_create_by(uid: message.from.id) # TODO: add connection
     end
 
     def respond
       case message
       when Telegram::Bot::Types::CallbackQuery
-        p message.data
-        # send_message(weather_decorator.set_current_weather) if message.data.include?("current_weather")
-        # send_message(weather_decorator.weather_for_tomorrow) if message.data.include?("weather_for_tomorrow")
-        markup = Bot::ButtonsComposer.new(
-          user: user,
-          data: message.data,
-          structure: {
-            button_1: %i[bla1],
-            button_2: {
-              bla3: %i[bla3 bla4],
-              bla4: %i[bla4 bla5],
-            }
-          }
-        ).generate_markup
+        markup = compose_buttons(data: message.data, execute: :run_and_generate_markup)
 
-        # keyboard_markup = markup[:buttons]
-        # callback = markup[:callback]
-
-
-        bot.api.send_message(
-          chat_id:      message.from.id,
-          text:         markup[:callback],
-          reply_markup: markup[:buttons]
-        )
+        send_message('Types::CallbackQuery', markup)
       when Telegram::Bot::Types::Message
-        markup = Bot::ButtonsComposer.new(
-          user: user,
-          data: message.data,
-          structure: {
-            button_1: %i[bla1],
-            button_2: {
-              bla3: %i[bla3 bla4],
-              bla4: %i[bla4 bla5],
-            }
-          }
-        ).generate_markup
+        if message.reply_to_message.present?
+          p "REPLY '#{message.text}' to '#{message.reply_to_message.text}'"
+        end
+        markup = compose_buttons(execute: :generate_markup)
 
-        bot.api.send_message(
-          chat_id:      message.from.id,
-          text:         markup[:callback],
-          reply_markup: markup[:buttons]
-        )
-
-        # send_message("Make a choice")
+        send_message('Types::Message', markup)
       else
         puts "Something error"
       end
+    rescue => e
+      p e # TODO: should be logger over here
+    end
+
+    def compose_buttons(data: nil, execute:)
+      Bot::Buttons::ButtonsComposer.new(
+        user: user,
+        data: data,
+        structure: {
+          # bla_1: %i[bla_1],
+          # bla_2: {
+          #   bla_3: %i[bla_5 bla_4],
+          #   bla_4: %i[bla_4 bla_5],
+          # },
+          settings: {
+            reload_location: :execute,
+            set_time: :force_reply,
+          }
+        }
+      ).send execute
     end
 
 
-    def send_message(msg)
+    def send_message(msg, keyboard_markup)
       bot.api.send_message(
+        # parse_mode: 'html',
         chat_id:      message.from.id,
         text:         msg,
         reply_markup: keyboard_markup
