@@ -1,26 +1,17 @@
-require_relative 'abstract'
-require_relative 'settings'
-require_relative 'reload_location'
-require_relative 'set_time'
+require_relative '../settings'
 
 module Bot::Buttons
   class ButtonsComposer
     attr_reader :user, :data, :structure
 
-    BUTTONS = {
-      settings: Bot::Buttons::Settings,
-      reload_location: Bot::Buttons::ReloadLocation,
-      set_time: Bot::Buttons::SetTime,
-    }.freeze
-
-    def initialize(user:, data:, structure:)
+    def initialize(user:, data: nil, structure: nil)
       @user = user
       @data = data&.to_sym
-      @structure = structure
+      @structure = structure || Bot::Settings::STRUCTURE
     end
 
     def run_and_generate_markup
-      button_class = BUTTONS[data]
+      button_class = Bot::Settings::AVAILABLE_BUTTONS[data]
       raise "#{data.to_s.camelize} is not defined" unless button_class
       button = button_class.new
       button.execute
@@ -46,7 +37,7 @@ module Bot::Buttons
     private
 
     def collect_buttons(buttons_names_array)
-      buttons_array = buttons_names_array.map { |name| BUTTONS[name].new.markup }.compact
+      buttons_array = buttons_names_array.map { |name| Bot::Settings::AVAILABLE_BUTTONS[name].new.markup }.compact
       Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: buttons_array)
     end
   end

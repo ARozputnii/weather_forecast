@@ -1,8 +1,8 @@
 require_relative 'buttons/buttons_composer.rb'
+require_relative 'settings'
 
 module Bot
   class TelegramResponder
-    include Buttons
     attr_reader :bot, :message, :user
 
     def initialize(args)
@@ -34,18 +34,7 @@ module Bot
     def compose_buttons(data: nil, execute:)
       Bot::Buttons::ButtonsComposer.new(
         user: user,
-        data: data,
-        structure: {
-          # bla_1: %i[bla_1],
-          # bla_2: {
-          #   bla_3: %i[bla_5 bla_4],
-          #   bla_4: %i[bla_4 bla_5],
-          # },
-          settings: {
-            reload_location: :execute,
-            set_time: :force_reply,
-          }
-        }
+        data: data
       ).send execute
     end
 
