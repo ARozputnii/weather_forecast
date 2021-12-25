@@ -14,7 +14,7 @@ module Bot
     def respond
       case message
       when Telegram::Bot::Types::CallbackQuery
-        markup, response_msg = compose_buttons(data: message.data, execute: :run_and_generate_markup)
+        markup, response_msg = compose_buttons(data: message.data, execute: :execute_and_generate_markup)
         send_message(response_msg, markup)
       when Telegram::Bot::Types::Message
         # TODO: handle user reply
@@ -32,7 +32,7 @@ module Bot
     end
 
     def compose_buttons(data: nil, execute:)
-      composer      = Bot::Buttons::ButtonsComposer.new(user: user, data: data)
+      composer      = Bot::Buttons::ButtonsComposer.new(user: user, callback: data)
       markup        = composer.send execute
       response_msg  = composer.response_message
 

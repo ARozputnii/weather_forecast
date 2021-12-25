@@ -2,7 +2,7 @@ module Bot
   module Buttons
     class Settings < Abstract
       def execute
-        p "SETTINGS"
+        p "EXECUTE SETTINGS"
       end
 
       def markup

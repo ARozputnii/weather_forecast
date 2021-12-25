@@ -2,7 +2,7 @@ module Bot
   module Buttons
     class ReloadLocation < Abstract
       def execute
-        p "RELOAD LOCATION"
+        p "EXECUTE RELOAD LOCATION"
       end
 
       def markup

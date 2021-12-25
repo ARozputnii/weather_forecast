@@ -2,7 +2,7 @@ module Bot
   module Buttons
     class SetTime < Abstract
       def execute
-        p "SET TIME"
+        p "EXECUTE SETTIME"
       end
 
       def markup
