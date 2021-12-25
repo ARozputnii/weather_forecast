@@ -1,6 +1,6 @@
 module Bot
   module Buttons
-    class Settings < Abstract
+    class Settings < Base
       def execute
         p "EXECUTE SETTINGS"
       end
@@ -11,8 +11,6 @@ module Bot
           callback_data: "settings"
         )
       end
-
-      def force_reply; end
 
       def response_message
         self.class.name

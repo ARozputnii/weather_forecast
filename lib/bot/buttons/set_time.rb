@@ -1,6 +1,6 @@
 module Bot
   module Buttons
-    class SetTime < Abstract
+    class SetTime < Base
       def execute
         p "EXECUTE SETTIME"
       end
@@ -9,13 +9,6 @@ module Bot
         Telegram::Bot::Types::InlineKeyboardButton.new(
           text:          "Set time when to notify about weather",
           callback_data: "set_time"
-        )
-      end
-
-      def force_reply
-        Telegram::Bot::Types::ForceReply.new(
-          force_reply: true,
-          selective:   true
         )
       end
 

@@ -2,11 +2,11 @@ require_relative "../settings"
 
 module Bot::Buttons
   class ButtonsComposer
-    attr_reader :user, :callback, :structure, :markup, :response_message, :chosen_button
+    attr_reader :user, :callback, :structure, :markup, :response_message, :chosen_button, :structure_value
 
     SPECIAL_COMMANDS = {
-      execute: Proc.new { |_composer| return },
-      force_reply: Proc.new { |composer| return composer.chosen_button.force_reply }
+      execute:     -> (composer) { composer.execute_chosen_btn; nil },
+      force_reply: -> (composer) { composer.execute_chosen_btn; composer.chosen_button.force_reply }
     }.freeze
 
     def initialize(user:, callback: nil, structure: nil)
@@ -17,12 +17,12 @@ module Bot::Buttons
 
     def execute_and_generate_markup
       set_chosen_btn
-      set_response_msg
-      chosen_button.execute
-
-      SPECIAL_COMMANDS[callback]&.call(self)
-
-      generate_markup
+      command = SPECIAL_COMMANDS[structure_value]
+      if command
+        command.call(self)
+      else
+        generate_markup
+      end
     end
 
     def generate_markup
@@ -32,12 +32,16 @@ module Bot::Buttons
       end
 
       set_response_msg
-      result = structure.deep_find(callback)
-      @markup = if result.is_a? Array
-        collect_buttons(result)
-      elsif result.is_a? Hash
-        collect_buttons(result.keys)
+      @markup = if structure_value.is_a? Array
+        collect_buttons(structure_value)
+      elsif structure_value.is_a? Hash
+        collect_buttons(structure_value.keys)
       end
+    end
+
+    def execute_chosen_btn
+      chosen_button.execute
+      set_response_msg
     end
 
     private
@@ -54,8 +58,8 @@ module Bot::Buttons
       @response_message = chosen_button.response_message
     end
 
-    def execute_chosen_btn
-      chosen_button.execute
+    def structure_value
+      @structure_value ||= structure.deep_find(callback)
     end
   end
 end

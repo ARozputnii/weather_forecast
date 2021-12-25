@@ -1,6 +1,6 @@
 module Bot
   module Buttons
-    class ReloadLocation < Abstract
+    class ReloadLocation < Base
       def execute
         p "EXECUTE RELOAD LOCATION"
       end
@@ -11,8 +11,6 @@ module Bot
           callback_data: "reload_location"
         )
       end
-
-      def force_reply; end
 
       def response_message
         self.class.name

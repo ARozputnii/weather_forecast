@@ -1,4 +1,5 @@
 require_relative "buttons/abstract"
+require_relative 'buttons/base'
 require_relative "buttons/settings"
 require_relative "buttons/reload_location"
 require_relative "buttons/set_time"
