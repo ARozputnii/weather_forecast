@@ -1,4 +1,5 @@
 require_relative "../lib/app_configurator"
+AppConfigurator.setup_database
 
 # bundle exec sidekiq -r ./bin/sidekiq_boot.rb -C config/sidekiq.yml
 Sidekiq.configure_server do |config|

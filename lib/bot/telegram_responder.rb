@@ -1,33 +1,47 @@
-require_relative "buttons"
-require_relative "../weather/weather_decorator"
+require_relative "buttons/buttons_composer.rb"
+require_relative "settings"
 
 module Bot
   class TelegramResponder
-    include Buttons
-    attr_reader :bot, :message, :weather_decorator
+    attr_reader :bot, :message, :user
 
     def initialize(args)
       @bot = args[:bot]
       @message = args[:message]
-      @weather_decorator = args[:weather_data]
-      # @user = User.find_or_create_by(uid: message.from.id) # TODO: add connection
+      @user = args[:user]
     end
 
     def respond
       case message
       when Telegram::Bot::Types::CallbackQuery
-        send_message(weather_decorator.set_current_weather) if message.data.include?("current_weather")
-        send_message(weather_decorator.weather_for_tomorrow) if message.data.include?("weather_for_tomorrow")
+        markup, response_msg = compose_buttons(data: message.data, execute: :execute_and_generate_markup)
+        send_message(response_msg, markup)
       when Telegram::Bot::Types::Message
-        send_message("Make a choice")
+        # TODO: handle user reply
+        if message.reply_to_message.present?
+          p "REPLY '#{message.text}' to '#{message.reply_to_message.text}'"
+        end
+
+        markup, response_msg = compose_buttons(execute: :generate_markup)
+        send_message(response_msg, markup)
       else
         puts "Something error"
       end
+    rescue => e
+      p e # TODO: should be a logger over here
     end
 
+    def compose_buttons(data: nil, execute:)
+      composer      = Bot::Buttons::ButtonsComposer.new(user: user, callback: data)
+      markup        = composer.send execute
+      response_msg  = composer.response_message
 
-    def send_message(msg)
+      [markup, response_msg]
+    end
+
+    def send_message(msg, keyboard_markup)
       bot.api.send_message(
+        parse_mode:   "html",
         chat_id:      message.from.id,
         text:         msg,
         reply_markup: keyboard_markup
